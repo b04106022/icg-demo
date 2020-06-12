@@ -121,8 +121,8 @@ if __name__ == '__main__' :
     img2 = np.float32(img2)
 
     # Read array of corresponding points
-    points1 = readPoints(out_dir1 + '/' + name1 + '.txt')
-    points2 = readPoints(out_dir2 + '/' + name2 + '.txt')
+    points1 = readPoints('results/landmark/' + name1 + '.txt')
+    points2 = readPoints('results/landmark/' + name2 + '.txt')
     points = [];
 
     # Append 8 additional points: corners and half way points
@@ -182,6 +182,7 @@ if __name__ == '__main__' :
         # if alpha > 1 :  alpha = 2 - alpha
         
         # Comment this line to get a cartoon effect 
+        #icg to find out the differences
         points = []         
 
         # Compute weighted average point coordinates
@@ -213,7 +214,10 @@ if __name__ == '__main__' :
             index = str(f).zfill(4)
         else : index = 'a' + str(int(a)).zfill(4)
 
-        cv2.imwrite( out_dir1 + '/morph-' + name1 + '-' + name2 + '-' + index + '.png', np.uint8(imgMorph) )
+        out_dir = 'results/morphing/' + name1 + '-' + name2 + '/'
+        if not os.path.isdir(out_dir):
+            os.mkdir(out_dir)
+        cv2.imwrite( out_dir + '/morph-' + name1 + '-' + name2 + '-' + index + '.png', np.uint8(imgMorph) )
 
-    print('Morphing results exported in ' + out_dir1)
+    print('Morphing results exported in ' + out_dir)
     print('Done!')
