@@ -125,39 +125,6 @@ if __name__ == '__main__' :
     points2 = readPoints('results/landmark/' + name2 + '.txt')
     points = [];
 
-    # Append 8 additional points: corners and half way points
-    size = img1.shape
-    h = size[0]
-    w = size[1]
-    h2 = int(size[0]/2)
-    w2 = int(size[1]/2)
-
-    points1.append( (0    , 0    ) )
-    points1.append( (0    , h - 1) )
-    points1.append( (w - 1, 0    ) )
-    points1.append( (w - 1, h - 1) )
-
-    points1.append( (0    , h2   ) )
-    points1.append( (w2   , 0    ) )
-    points1.append( (w - 1, h2   ) )
-    points1.append( (w2   , h - 1) )
-
-    size = img2.shape
-    h = size[0]
-    w = size[1]
-    h2 = int(size[0]/2)
-    w2 = int(size[1]/2)
-
-    points2.append( (0    , 0    ) )
-    points2.append( (0    , h - 1) )
-    points2.append( (w - 1, 0    ) )
-    points2.append( (w - 1, h - 1) )
-
-    points2.append( (0    , h2   ) )
-    points2.append( (w2   , 0    ) )
-    points2.append( (w - 1, h2   ) )
-    points2.append( (w2   , h - 1) )
-
     # Delaunay points
     delaunay = get_delaunay_indexes(img1,points1)
 
@@ -183,7 +150,7 @@ if __name__ == '__main__' :
         
         # Comment this line to get a cartoon effect 
         #icg to find out the differences
-        points = []         
+        # points = []         
 
         # Compute weighted average point coordinates
         for i in range(0, len(points1)):
@@ -217,7 +184,7 @@ if __name__ == '__main__' :
         out_dir = 'results/morphing/' + name1 + '-' + name2 + '/'
         if not os.path.isdir(out_dir):
             os.mkdir(out_dir)
-        cv2.imwrite( out_dir + '/morph-' + name1 + '-' + name2 + '-' + index + '.png', np.uint8(imgMorph) )
-
+        cv2.imwrite( out_dir + 'morph-' + name1 + '-' + name2 + '-' + index + '.png', np.uint8(imgMorph) )
+        
     print('Morphing results exported in ' + out_dir)
     print('Done!')

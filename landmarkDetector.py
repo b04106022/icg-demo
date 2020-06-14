@@ -53,10 +53,25 @@ for (i, rect) in enumerate(rects):
     cv2.putText(image, "Face".format(i + 1), (x - 10, y - 10),
     cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
+    # Append 8 additional points: corners and half way points
+    size = image.shape
+    h = size[0]
+    w = size[1]
+    h2 = int(size[0]/2)
+    w2 = int(size[1]/2)
+
     # loop over the (x, y)-coordinates for the facial landmarks
     # and draw them on the image
     for (x, y) in shape:
         cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
+    cv2.circle(image, (0, 0), 1, (0, 0, 255), -1)
+    cv2.circle(image, (0, h-1), 1, (0, 0, 255), -1)
+    cv2.circle(image, (w-1, 0), 1, (0, 0, 255), -1)
+    cv2.circle(image, (w-1, h-1), 1, (0, 0, 255), -1)
+    cv2.circle(image, (0, h2), 1, (0, 0, 255), -1)
+    cv2.circle(image, (w2, 0), 1, (0, 0, 255), -1)
+    cv2.circle(image, (w-1, h2), 1, (0, 0, 255), -1)
+    cv2.circle(image, (w2, h-1), 1, (0, 0, 255), -1)
 
     # loop over the (x, y)-coordinates for the facial landmarks
     # and write them on a file
@@ -66,6 +81,15 @@ for (i, rect) in enumerate(rects):
     for (x, y) in shape:
         f.write(str(x) + ' ' + str(y) + '\n')
     
+    f.write(str(0) + ' ' + str(0) + '\n')
+    f.write(str(0) + ' ' + str(h - 1) + '\n')
+    f.write(str(w - 1) + ' ' + str(0) + '\n')
+    f.write(str(w - 1) + ' ' + str(h - 1) + '\n')
+    f.write(str(0) + ' ' + str(h2) + '\n')
+    f.write(str(w2) + ' ' + str(0) + '\n')
+    f.write(str(w - 1) + ' ' + str(h2) + '\n')
+    f.write(str(w2) + ' ' + str(h-1) + '\n')
+     
     f.close()
     print('Landmarks exported to ' + landmarks_file)    
 
