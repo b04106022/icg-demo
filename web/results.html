@@ -22,6 +22,9 @@
             table td{
                 padding: 3px;
             }
+            ol li{
+                line-height: 1.7em;
+            }
         </style>
     </head>
     <body id="page-top">
@@ -46,7 +49,7 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase"></i>Results</h2>
-                    <h3 class="section-subheading text-muted"></h3>
+                    <h3 class="section-subheading text-muted">Take Taiwan president for example</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -56,7 +59,7 @@
                             <tr>
                                 <td><img src="img\results\landmark\presiden6_landmarks.jpg" alt="" width="200"></td>
                                 <td><img src="img\results\landmark\presiden7_landmarks.jpg" alt="" width="200"></td>
-                                <td><p class="ml-4">First, I used <a href="http://dlib.net/" target="_blank">dlib</a> to detect 68 corresponding points automatically by using facial feature points. Next, I added eight more points ( the corners of the image and half way points between those corners ) as corresponding points as well to get even better results. </p>
+                                <td><p class="ml-4">I used <a href="http://dlib.net/" target="_blank">dlib</a> to detect 68 corresponding points automatically by using facial feature points. Next, I added eight more points ( the corners of the image and half-way points between those corners ) as corresponding points as well to get even better results. </p>
                                 </td>
                             </tr>
                         </table>
@@ -72,8 +75,8 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <h3>Step 2<br>Delaunay Triangulation</h3><br>
-                        <p class="ml-4">These are five images that  morphing from the previous Taiwan president, Ma Ying-Jeou, to the current president, Tsai Ing-wen.
-                            The values of alpha are different. Can you tell the photos are more like Ma Ying-Jeou or Tsai Ing-wen?</p>
+                        <p class="ml-4">From the previous step, we have two sets of 76 points. We can calculate the average of corresponding points in the two sets and obtain a single set of 76 points. On this set of average points, we perform Delaunay triangulation.<br>The result of Delaunay triangulation is a list of triangle vertices.</p>
+                        <p class="ml-4">The triangulation and the Voronoi diagram are shown below:</p>
                         <table>
                             <tr>
                                 <td><img src="img\results\delaunay\presiden6_delaunay.jpg" alt="" width="200"></td>
@@ -94,9 +97,16 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-10">
                         <h3>Step 3<br>Warping Images and Alpha Blending</h3><br>
+                        <p>The amount of morphing is controlled by a parameter alpha. E.g., for alpha = 0, you will get the source image, and for alpha = 1, you will get the destination image. For any other alpha, it will be the blend between the two. </p>
+                        <p>Create a morph using the following steps:<br>
+                        <ol>
+                            <li>Use alpha to calculate the location of the points in the output image by taking a weighted average of<br>the two input image points.</li>
+                            <li>Calculate the affine transform between every triangle in the input images and the destination image.</li>
+                            <li>Warp triangle from each input image to the output image, and blend the pixels based on alpha.<br>Do this for every triangle and you get the output morphed image.</li>
+                        </ol>
+                        </p><br><br>
                         <h4 class="ml-4">alpha</h4>
-                        <p class="ml-4">These are five images that  morphing from the previous Taiwan president, Ma Ying-Jeou, to the current president, Tsai Ing-wen.
-                            The values of alpha are different. Can you tell the photos are more like Ma Ying-Jeou or Tsai Ing-wen?</p>
+                        <p class="ml-4">The images below show you different alpha values.</p>
                         <table>
                             <tr class="text-center">
                                 <td>alpha = 0</td>
@@ -120,8 +130,20 @@
                             </tr>
                         </table><br><br><br>
                         <h4 class="ml-4">nframes</h4>
-                        <p class="ml-4">These are five images that  morphing from the previous Taiwan president, Ma Ying-Jeou, to the current president, Tsai Ing-wen.
-                            The values of alpha are different. Can you tell the photos are more like Ma Ying-Jeou or Tsai Ing-wen?</p>
+                        <p class="ml-4">The number of frames determines the magnitude of the change between morphing images. The larger the nframes, the more drastic the changes between morphing images, and vice versa.</p>
+                        <table>
+                            <tr>
+                                <td>nframes = 6</td>
+                                <td><img src="img\results\morphing\0.png" alt="" width="200"></td>
+                                <td><img src="img\results\morphing\0.2.png" alt="" width="200"></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>nframes = 15</td>
+                                <td><img src="img\results\morphing\0.png" alt="" width="200"></td>
+                                <td><img src="img\results\morphing\15f.png" alt="" width="200"></td>
+                            </tr>
+                        </table><br><br>
+                        <p class="ml-4">The images below show you a different number of morphing frames. The duration of each frame is 100 millisecond.</p>
                         <table>
                             <tr>
                                 <td><img src="img\results\morphing\10.gif" alt="" width="200"></td>
@@ -138,8 +160,7 @@
                         <table class="ml-4">
                             <tr>
                                 <td><img src="img\results\morphing\loopback.gif" alt="" width="200"></td>
-                                <td><p class="ml-4">These are five images that  morphing from the previous Taiwan president, Ma Ying-Jeou, to the current president, Tsai Ing-wen.
-                                    The values of alpha are different. Can you tell the photos are more like Ma Ying-Jeou or Tsai Ing-wen?</p></td>
+                                <td><p class="ml-4">This effect demonstrates the morphing process from the source image to the destination image, and then moving back. The algorithm behind is just to double the alpha value and to reduce it when the value exceeds 1.</p></td>
                             </tr>
                         </table><br><br><br>
                         <h4 class="ml-4">cartoon effect</h4>
@@ -147,12 +168,11 @@
                             <tr>
                                 <td><img src="img\results\morphing\30.gif" alt="" width="200"></td>
                                 <td><img src="img\results\morphing\cartoon.gif" alt="" width="200"></td>
-                                <td><p class="ml-4">These are five images that  morphing from the previous Taiwan president, Ma Ying-Jeou, to the current president, Tsai Ing-wen.
-                                    The values of alpha are different. Can you tell the photos are more like Ma Ying-Jeou or Tsai Ing-wen?</p></td>
+                                <td><p class="ml-4">Make landmarks from the first face stay for every morphing iteration. This effect transfers the facial expression from one face to the other.</p></td>
                             </tr>
                             <tr class="text-center">
-                                <td>(Original)</td>
-                                <td>(Cartoon)</td>
+                                <td>(original)</td>
+                                <td>(cartoon)</td>
                             </tr>
                         </table>
                         

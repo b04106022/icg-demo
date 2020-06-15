@@ -6,7 +6,7 @@ if __name__ == '__main__' :
 
     # Input arguments
     ap = argparse.ArgumentParser()
-    ap.add_argument("-p", "--path", required=True, help="path of morpged images")
+    ap.add_argument("-p", "--path", required=True, help="path to morpged images")
     args = vars(ap.parse_args())
     
     # Create the frames
