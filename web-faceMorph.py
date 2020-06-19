@@ -178,13 +178,13 @@ if __name__ == '__main__' :
         # Save morphing frame
         index = []
         if args["nframes"] :
-            index = str(f).zfill(4)
-        else : index = 'a' + str(int(a)).zfill(4)
+            index = str(f).zfill(3)
+        else : index = 'a' + str(int(a)).zfill(3)
 
-        out_dir = 'results/morphing/' + name1 + '-' + name2 + '/'
+        out_dir = 'results/web/' + name1 + '-' + name2 + '/'
         if not os.path.isdir(out_dir):
             os.mkdir(out_dir)
-        cv2.imwrite( out_dir + 'morph-' + name1 + '-' + name2 + '-' + index + '.png', np.uint8(imgMorph) )
+        cv2.imwrite( out_dir + index + '.png', np.uint8(imgMorph) )
         
     print('Morphing results exported in ' + out_dir)
     print('Done!')
